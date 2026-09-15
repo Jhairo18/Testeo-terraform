@@ -1,4 +1,5 @@
 import mlflow
+from mlflow import MlflowClient
 import mlflow.sklearn
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
@@ -6,8 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 # Apuntar al servidor en EC2
-mlflow.set_tracking_uri("http://172.31.40.22:5000")
-mlflow.set_experiment("demo_ec2_v2")
+mlflow.set_tracking_uri("http://34.230.71.222:5000")
+mlflow.set_experiment("modelo_iris")
 
 
 with mlflow.start_run():

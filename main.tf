@@ -39,6 +39,15 @@ resource "aws_security_group" "sg_ssh" {
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  # Permite la conexion con todo el internet
+  # los repositorios de Ubuntu descargan los paquetes usando HTTP, puerto 80
+  egress {
+    description = "HTTP"
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     description = "POSTGRES RDS TCP"
     from_port = 5432

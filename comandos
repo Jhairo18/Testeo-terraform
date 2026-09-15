@@ -13,5 +13,13 @@ nohup mlflow server \
     --port 5000 \
     --allowed-hosts "*" \
     --cors-allowed-origins "*" > mlflow.log 2>&1 &
+    
+nohup mlflow server \
+    --backend-store-uri sqlite:////home/ubuntu/mlflow.db \
+    --default-artifact-root s3://mlflow-artifacts-jhairo \
+    --host 0.0.0.0 \
+    --port 5000 \
+    --allowed-hosts "*" \
+    --cors-allowed-origins "*" > mlflow.log 2>&1 &
 
 ssh -i "Amazon.pem" ubuntu@ec2-3-82-3-100.compute-1.amazonaws.com 
