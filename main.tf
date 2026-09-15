@@ -39,6 +39,13 @@ resource "aws_security_group" "sg_ssh" {
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  egress {
+    description = "POSTGRES RDS TCP"
+    from_port = 5432
+    to_port = 5432
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   tags = {
     Name = "sg-permitir-ssh-mlflow"
   }
@@ -106,6 +113,19 @@ resource "aws_instance" "servidor_mlflow" {
   tags = {
     Name = "servidor-mlflow"
   }
+}
+# 7. Bucket de S3 para almacenar artefactos
+resource "aws_s3_bucket" "mlflow_artifacts" {
+  bucket = "mlflow-artifacts-jhairo"
+  force_destroy = true
+  tags = {
+    Name = "mlflow-artifacts"
+    environment = "mlflow"
+  }
+}
+output "s3_bucket_uri" {
+  description = "URI del bucket de S3"
+  value = "s3://${aws_s3_bucket.mlflow_artifacts.id}"
 }
 resource "aws_db_instance" "postgres_mlflow"{
   identifier             = "mlflow-db"
