@@ -69,7 +69,7 @@ resource "aws_security_group" "sg_rds" {
     from_port = 5432
     to_port = 5432
     protocol = "tcp"
-    security_groups = [aws_security_group.sg_ssh.id]
+    cidr_blocks = ["190.238.165.25/32"]
   }
   # Permite la conexion con todo el internet
   egress {
@@ -97,6 +97,7 @@ data "aws_subnets" "default" {
 ## Crear un grupo de subredes
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name = "db-subnet-group-mlflow"
+  publicly_accessible = true
   subnet_ids = data.aws_subnets.default.ids
   tags = {
     Name = "MLflow DB Subnet Group"
